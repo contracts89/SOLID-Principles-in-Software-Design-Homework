@@ -1,4 +1,6 @@
-﻿using LoggingLibrary.Contratcs;
+﻿using System;
+using LoggingLibrary;
+using LoggingLibrary.Contratcs;
 using LoggingLibrary.LibraryModels;
 
 namespace TestLibraryLogger
@@ -7,6 +9,7 @@ namespace TestLibraryLogger
     {
         static void Main()
         {
+            Console.WriteLine("Test One");
             ILayout simpleLayout = new SimpleLayout();
             IAppender consoleAppender =
                  new ConsoleAppender(simpleLayout);
@@ -15,24 +18,30 @@ namespace TestLibraryLogger
             logger.Error("Error parsing JSON.");
             logger.Info(string.Format("User {0} successfully registered.", "Pesho"));
 
-            //var xmlLayout = new XmlLayout();
-            //var consoleAppender = new ConsoleAppender(xmlLayout);
-            //var logger = new Logger(consoleAppender);
+            Console.WriteLine();
 
-            //logger.Fatal("mscorlib.dll does not respond");
-            //logger.Critical("No connection string found in App.config");
+            Console.WriteLine("Test two");
+            var xmlLayout = new XmlLayout();
+            var consoleAppenderNew = new ConsoleAppender(xmlLayout);
+            var loggerNew = new Logger(consoleAppenderNew);
 
-            //var simpleLayout = new SimpleLayout();
-            //var consoleAppender = new ConsoleAppender(simpleLayout);
-            //consoleAppender.Threshold = ReportLevel.Error;
+            loggerNew.Fatal("mscorlib.dll does not respond");
+            loggerNew.Critical("No connection string found in App.config");
 
-            //var logger = new Logger(consoleAppender);
+            Console.WriteLine();
 
-            //logger.Info("Everything seems fine");
-            //logger.Warn("Warning: ping is too high - disconnect imminent");
-            //logger.Error("Error parsing request");
-            //logger.Critical("No connection string found in App.config");
-            //logger.Fatal("mscorlib.dll does not respond");
+            Console.WriteLine("Test three");
+            var simpleLayoutTest = new SimpleLayout();
+            var consoleAppenderTest = new ConsoleAppender(simpleLayoutTest);
+            consoleAppenderTest.Threshold = ReportLevel.Error;
+
+            var loggerTest = new Logger(consoleAppender);
+
+            loggerTest.Info("Everything seems fine");
+            loggerTest.Warn("Warning: ping is too high - disconnect imminent");
+            loggerTest.Error("Error parsing request");
+            loggerTest.Critical("No connection string found in App.config");
+            loggerTest.Fatal("mscorlib.dll does not respond");
         }
     }
 }
